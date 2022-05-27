@@ -3,6 +3,6 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
 },{"./../images/search.jpg":[["search.26655cb1.jpg","a2dl"],"a2dl"]}],"FV1x":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.fetchImages=r;const e="https://pixabay.com/api/",t="27623768-405768f09194e046df4a054c4";function r(r){return fetch(`${e}?key=${t}&q=${r}&image_type=photo&orientation="horizontal"&safesearch="true"`).then(e=>{if(!e.ok)throw new Error("Error fetching data");return e.json()})}
 },{}],"Focm":[function(require,module,exports) {
-"use strict";require("./sass/main.scss");var e=require("./js/fetchImages");const r=document.querySelector("#search-form");function s(r){r.preventDefault(),console.log(r.currentTarget.elements.searchQuery.value),(0,e.fetchImages)(r.currentTarget.elements.searchQuery.value)}r.addEventListener("submit",s);
+"use strict";require("./sass/main.scss");var e=require("./js/fetchImages");const s=document.querySelector("#search-form");function r(s){s.preventDefault(),console.log((0,e.fetchImages)(s.currentTarget.elements.searchQuery.value))}s.addEventListener("submit",r);
 },{"./sass/main.scss":"clu1","./js/fetchImages":"FV1x"}]},{},["Focm"], null)
-//# sourceMappingURL=/goit-js-hw-11/src.fb8b77e8.js.map
+//# sourceMappingURL=/goit-js-hw-11/src.d27b8d2a.js.map
