@@ -1,6 +1,8 @@
 parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcelRequire,u="function"==typeof require&&require;function f(t,n){if(!r[t]){if(!e[t]){var i="function"==typeof parcelRequire&&parcelRequire;if(!n&&i)return i(t,!0);if(o)return o(t,!0);if(u&&"string"==typeof t)return u(t);var c=new Error("Cannot find module '"+t+"'");throw c.code="MODULE_NOT_FOUND",c}p.resolve=function(r){return e[t][1][r]||r},p.cache={};var l=r[t]=new f.Module(t);e[t][0].call(l.exports,p,l,l.exports,this)}return r[t].exports;function p(e){return f(p.resolve(e))}}f.isParcelRequire=!0,f.Module=function(e){this.id=e,this.bundle=f,this.exports={}},f.modules=e,f.cache=r,f.parent=o,f.register=function(r,t){e[r]=[function(e,r){r.exports=t},{}]};for(var c=0;c<t.length;c++)try{f(t[c])}catch(e){i||(i=e)}if(t.length){var l=f(t[t.length-1]);"object"==typeof exports&&"undefined"!=typeof module?module.exports=l:"function"==typeof define&&define.amd?define(function(){return l}):n&&(this[n]=l)}if(parcelRequire=f,i)throw i;return f}({"clu1":[function(require,module,exports) {
 
-},{"./../images/search.jpg":[["search.26655cb1.jpg","a2dl"],"a2dl"]}],"Focm":[function(require,module,exports) {
-"use strict";require("./sass/main.scss");
-},{"./sass/main.scss":"clu1"}]},{},["Focm"], null)
-//# sourceMappingURL=/goit-js-hw-11/src.42b63341.js.map
+},{"./../images/search.jpg":[["search.26655cb1.jpg","a2dl"],"a2dl"]}],"FV1x":[function(require,module,exports) {
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.fetchImages=r;const e="https://pixabay.com/api/",t="27623768-405768f09194e046df4a054c4";function r(r){return fetch(`${e}?key=${t}&q=${r}&image_type=photo&orientation="horizontal"&safesearch="true"`).then(e=>{if(!e.ok)throw new Error("Error fetching data");return e.json()})}
+},{}],"Focm":[function(require,module,exports) {
+"use strict";require("./sass/main.scss");var e=require("./js/fetchImages");const r=document.querySelector("#search-form");function s(r){r.preventDefault(),console.log(r.currentTarget.elements.searchQuery.value),(0,e.fetchImages)(r.currentTarget.elements.searchQuery.value)}r.addEventListener("submit",s);
+},{"./sass/main.scss":"clu1","./js/fetchImages":"FV1x"}]},{},["Focm"], null)
+//# sourceMappingURL=/goit-js-hw-11/src.fb8b77e8.js.map
