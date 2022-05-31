@@ -1,16 +1,51 @@
 import './sass/main.scss';
-import { fetchImages } from './js/fetchImages';
+import imageCardTpl from './templates/imageCard.hbs'
+import { fetchImages } from './js/api.js';
 
 const formRef = document.querySelector("#search-form");
+const galleryRef = document.querySelector('.gallery');
 
-formRef.addEventListener("submit", onSearch);
+formRef.addEventListener("submit", renderList);
 
-function onSearch(event) {
+
+// function onSearch(event) {
+//     event.preventDefault();
+//     console.log(event.currentTarget.elements.searchQuery.value);
+// return fetchImages(event.currentTarget.elements.searchQuery.value);
+// }
+
+function renderList(event){
     event.preventDefault();
-    // console.log(event.currentTarget.elements.searchQuery.value);
-    console.log(fetchImages(event.currentTarget.elements.searchQuery.value));
-}
 
+        const userRequest = event.currentTarget.value;
+        
+        if (userRequest === '') {
+            galleryRef.innerHTML = "";
+            return;
+        }
+     
+        return fetchImages(userRequest)
+            .then(array => {
+                // if (array.length >10) {
+                //     countryInfoRef.innerHTML = "";
+                //     countriesListRef.innerHTML ="";
+                //     Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
+                // } else if (array.length >= 2) {
+                //     countryInfoRef.innerHTML = "";                
+                //     const markup = countryCardsTpl(array);
+                //     countriesListRef.innerHTML = markup;
+                // } else {
+                //     countriesListRef.innerHTML ="";                
+                    const markup = imageCardTpl(array);
+                    galleryRef.insertAdjacentHTML("beforeend", markup);
+                    console.log(galleryRef);
+                // }
+        })
+            .catch(error => {
+                galleryRef.innerHTML = "";
+                // Notiflix.Notify.failure("Oops, there is no country with that name.")
+            });
+    }
 
 
 

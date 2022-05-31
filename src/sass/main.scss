@@ -5,15 +5,17 @@
 
 // Стили для файла с примером HTML-фрагмента
 // @import './example';
+
 body{
-            //   height: 240px;
-            width: 100vw;
-            height: 100vh;
-              // Путь к изображениям из SASS-файла всегда такой, как из папки css
-              background-image: url('../images/search.jpg');
-              background-color: green;
-            //   background-size: cover;
-              background-position: center;
+  size: 20px;
+//             //   height: 240px;
+//             width: 100vw;
+//             height: 100vh;
+//               // Путь к изображениям из SASS-файла всегда такой, как из папки css
+//               background-image: url('../images/search.jpg');
+//               background-color: green;
+//             //   background-size: cover;
+//               background-position: center;
 
 }
 
