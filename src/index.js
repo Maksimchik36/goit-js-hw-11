@@ -7,18 +7,11 @@ const galleryRef = document.querySelector('.gallery');
 
 formRef.addEventListener("submit", renderList);
 
-
-// function onSearch(event) {
-//     event.preventDefault();
-//     console.log(event.currentTarget.elements.searchQuery.value);
-// return fetchImages(event.currentTarget.elements.searchQuery.value);
-// }
-
 function renderList(event){
     event.preventDefault();
 
-        const userRequest = event.currentTarget.value;
-        
+        const userRequest = event.target.elements.searchQuery.value.trim();
+           
         if (userRequest === '') {
             galleryRef.innerHTML = "";
             return;
@@ -26,17 +19,8 @@ function renderList(event){
      
         return fetchImages(userRequest)
             .then(array => {
-                // if (array.length >10) {
-                //     countryInfoRef.innerHTML = "";
-                //     countriesListRef.innerHTML ="";
-                //     Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
-                // } else if (array.length >= 2) {
-                //     countryInfoRef.innerHTML = "";                
-                //     const markup = countryCardsTpl(array);
-                //     countriesListRef.innerHTML = markup;
-                // } else {
-                //     countriesListRef.innerHTML ="";                
-                    const markup = imageCardTpl(array);
+                console.log(array);
+                    const markup = imageCardTpl(array.hits);
                     galleryRef.insertAdjacentHTML("beforeend", markup);
                     console.log(galleryRef);
                 // }
@@ -58,8 +42,7 @@ function renderList(event){
 
 
 // import './sass/main.scss';
-// import Pagination from 'tui-pagination';
-// import 'tui-pagination/dist/tui-pagination.css';
+
 // import apiService from "./js/api";
 // import renderGallery from './js/render_images'
 
@@ -68,28 +51,12 @@ function renderList(event){
 
 // let searchQuery = '';
 
-// const options = {
-//   totalItems: 0,
-//   itemsPerPage: 3,
-//   visiblePages: 10,
-//   page: 1,
-// };
-
-
-// apiService.itemsPerPage = options.itemsPerPage;
-
-
-
-// const pagination = new Pagination('pagination', options);
-// // console.dir(pagination);
-
-// const page = pagination.getCurrentPage();
 
 
 // apiService.fetchPopularImages(page).then(({ images, total }) => {
 //    const markup = renderGallery(images);
 //     galleryEl.insertAdjacentHTML('beforeend', markup);
-//   pagination.reset(total);
+//
 // });
 
 // function popular(event) {
@@ -100,7 +67,6 @@ function renderList(event){
 //   });
 // }
 
-// pagination.on('afterMove', popular);
 
 // formEl.addEventListener('submit', onFormSubmit);
 
@@ -109,16 +75,13 @@ function renderList(event){
 
 //   galleryEl.innerHTML = '';
 
-//   pagination.off('afterMove', popular);
-//   pagination.movePageTo(1);
-//   pagination.on('afterMove', bySearch);
+//  
 
 //   apiService.searchQuery = event.currentTarget.elements.searchQuery.value;
   
 //   apiService.fetchImagesByName(page).then(({ images, total }) => {
 //    const markup = renderGallery(images);
 //     galleryEl.insertAdjacentHTML('beforeend', markup);
-//     pagination.reset(total);
 //   });
 // }
 
