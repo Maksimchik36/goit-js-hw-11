@@ -1,18 +1,26 @@
 const BASE_URL = "https://pixabay.com/api/";
 const KEY = "27623768-405768f09194e046df4a054c4";
 
-export function fetchImages(name){
-    return fetch(`${BASE_URL}?key=${KEY}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true`).then(response => {
+
+export default {
+    itemsPerPage: 5,
+    searchQuery: '',
+    
+    searchImages(name){
+    return fetch(`${BASE_URL}?key=${KEY}&q=${name}&page=${this.page}&per_page=${this.itemsPerPage}&image_type=photo&orientation=horizontal&safesearch=true`).then(response => {
         if (!response.ok){
             throw new Error('Error fetching data');
         }
+        // console.log(response.data);
         return response.json();
     })   
+}
 }
 
 
 
-          // FROM GINATION-TEST api.js
+
+          // FROM PAGINATION-TEST api.js
 
 
 // export default {

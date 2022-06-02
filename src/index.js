@@ -1,34 +1,62 @@
 import './sass/main.scss';
 import imageCardTpl from './templates/imageCard.hbs'
-import { fetchImages } from './js/api.js';
+import apiService from './js/api.js';
+import Notiflix from 'notiflix';
 
 const formRef = document.querySelector("#search-form");
 const galleryRef = document.querySelector('.gallery');
+const loadMoreRef = document.querySelector('.load-more')
 
-formRef.addEventListener("submit", renderList);
+formRef.addEventListener("submit", onFormSubmit);
+loadMoreRef.addEventListener("click", onBtnLoadMoreClick)
 
-function renderList(event){
+function onFormSubmit(event){
     event.preventDefault();
+    galleryRef.innerHTML = "";
+    const userRequest = event.target.elements.searchQuery.value.trim();
 
-        const userRequest = event.target.elements.searchQuery.value.trim();
-           
-        if (userRequest === '') {
-            galleryRef.innerHTML = "";
-            return;
-        }
+    if (userRequest === '') {            
+                    galleryRef.innerHTML = "";
+                    loadMoreRef.classList.remove('load-more-visible')
+                    Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+                    return;
+                }
+                apiService.searchImages(userRequest).then(data=>renderImages(data.hits));
+                loadMoreRef.classList.add('load-more-visible');
+             }
+
+function renderImages(hits){
+    const markup = imageCardTpl(hits); 
+    galleryRef.insertAdjacentHTML("beforeend", markup);
+}
+
+let page = 1;
+// function renderList(event){
+//         
+//         
      
-        return fetchImages(userRequest)
-            .then(array => {
-                console.log(array);
-                    const markup = imageCardTpl(array.hits);
-                    galleryRef.insertAdjacentHTML("beforeend", markup);
-                    console.log(galleryRef);
-                // }
-        })
-            .catch(error => {
-                galleryRef.innerHTML = "";
-                // Notiflix.Notify.failure("Oops, there is no country with that name.")
-            });
+//         return apiService.searchImages(userRequest)
+//             .then(array => {
+//                 if(array.total === 0){
+//                     Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
+//                 }               
+//         })
+//             .catch(error => {
+//                 console.log("error.message", error.message);
+//             });
+//     }
+
+//   
+
+    function onBtnLoadMoreClick(){
+             // добавить ещё картинок
+        page = this.page +1;
+        const data = apiService.searchImages().then(response=>{return renderImages(response)}).then(response=> response);
+
+        console.log("data", data);             
+
+        // если оставшиеся = 0
+        // loadMoreRef.classList.remove('load-more-visible');
     }
 
 
