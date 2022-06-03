@@ -27,9 +27,18 @@ function onFormSubmit(event) {
     }
             apiService.page = 1;
 
-    apiService.searchImages(searchQuery).then(data => renderImages(data.hits));
-    loadMoreRef.classList.add('load-more-visible');
+    apiService.searchImages(searchQuery).then(data => { renderImages(data.hits); return data; })
+        .then(data => {
+        if (data.totalHits > 0) {
+            Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+            loadMoreRef.classList.add('load-more-visible');
+        } else {
+            Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
              }
+        });
+    
+    
+}
 
 function renderImages(hits){
     const markup = imageCardTpl(hits); 
@@ -56,11 +65,14 @@ function renderImages(hits){
     function onBtnLoadMoreClick(){
         apiService.page += 1;
 
-        apiService.searchImages(searchQuery).then(data => renderImages(data.hits));
-        // data.totalHits - data.hits
-        // if () {
-        //     loadMoreRef.classList.remove('load-more-visible');
-        // }
+        apiService.searchImages(searchQuery).then(data => { renderImages(data.hits); return data }).then(data => {
+            if (data.hits.length < apiService.itemsPerPage) {
+                Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
+            loadMoreRef.classList.remove('load-more-visible');
+        }
+        }
+
+        )
     }
 
 
