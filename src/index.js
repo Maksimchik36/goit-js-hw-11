@@ -10,19 +10,25 @@ const loadMoreRef = document.querySelector('.load-more')
 formRef.addEventListener("submit", onFormSubmit);
 loadMoreRef.addEventListener("click", onBtnLoadMoreClick)
 
-function onFormSubmit(event){
+let searchQuery = '';
+
+function onFormSubmit(event) {
     event.preventDefault();
     galleryRef.innerHTML = "";
-    const userRequest = event.target.elements.searchQuery.value.trim();
+    // let page = 1;
 
-    if (userRequest === '') {            
+    searchQuery = event.currentTarget.elements.searchQuery.value.trim();
+
+    if (searchQuery === '') {            
                     galleryRef.innerHTML = "";
                     loadMoreRef.classList.remove('load-more-visible')
                     Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
                     return;
-                }
-                apiService.searchImages(userRequest).then(data=>renderImages(data.hits));
-                loadMoreRef.classList.add('load-more-visible');
+    }
+            apiService.page = 1;
+
+    apiService.searchImages(searchQuery).then(data => renderImages(data.hits));
+    loadMoreRef.classList.add('load-more-visible');
              }
 
 function renderImages(hits){
@@ -30,7 +36,6 @@ function renderImages(hits){
     galleryRef.insertAdjacentHTML("beforeend", markup);
 }
 
-let page = 1;
 // function renderList(event){
 //         
 //         
@@ -49,14 +54,13 @@ let page = 1;
 //   
 
     function onBtnLoadMoreClick(){
-             // добавить ещё картинок
-        page = this.page +1;
-        const data = apiService.searchImages().then(response=>{return renderImages(response)}).then(response=> response);
+        apiService.page += 1;
 
-        console.log("data", data);             
-
-        // если оставшиеся = 0
-        // loadMoreRef.classList.remove('load-more-visible');
+        apiService.searchImages(searchQuery).then(data => renderImages(data.hits));
+        // data.totalHits - data.hits
+        // if () {
+        //     loadMoreRef.classList.remove('load-more-visible');
+        // }
     }
 
 
