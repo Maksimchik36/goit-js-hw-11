@@ -18,6 +18,7 @@ let searchQuery = '';
 
 async function onFormSubmit(event) {
     event.preventDefault();
+    apiService.page = 1;
     galleryRef.innerHTML = "";
     loadMoreRef.classList.remove('load-more-visible');
     
@@ -30,20 +31,26 @@ async function onFormSubmit(event) {
     }
 
     const result = await apiService.searchImages(searchQuery);
-    await renderImages(result.data.hits);
+    // await renderImages(result.data.hits);
 
     imageLightBox.refresh();        
 
         if (result.data.totalHits > 0) {
             Notiflix.Notify.success(`Hooray! We found ${result.data.totalHits} images.`);
+            await renderImages(result.data.hits);
             loadMoreRef.classList.add('load-more-visible');
+
+            if (result.data.totalHits < apiService.itemsPerPage*apiService.page) {        
+                loadMoreRef.classList.remove('load-more-visible');
+                 }     
+                 
         } else {
             Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
              }  
 
-        if (result.data.totalHits < apiService.itemsPerPage*apiService.page) {        
-            loadMoreRef.classList.remove('load-more-visible');
-             }     
+        // if (result.data.totalHits < apiService.itemsPerPage*apiService.page) {        
+        //     loadMoreRef.classList.remove('load-more-visible');
+        //      }     
 }
 
 function renderImages(hits){
