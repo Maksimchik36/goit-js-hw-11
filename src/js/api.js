@@ -5,7 +5,7 @@ const KEY = "27623768-405768f09194e046df4a054c4";
 
 
 export default {
-    itemsPerPage: 5,
+    itemsPerPage: 40,
     page: 1,
         
 //     searchImages(searchQuery){
@@ -21,11 +21,9 @@ export default {
     async searchImages(searchQuery) {
   try {
       const response = await axios.get(`${BASE_URL}?key=${KEY}&q=${searchQuery}&page=${this.page}&per_page=${this.itemsPerPage}&image_type=photo&orientation=horizontal&safesearch=true`);
-    //   console.log(response);
       return response;
   } catch (error) {
-    //   console.error(error);
-      throw new Error('Error fetching data');
+      console.error(error);
   }
 }
 }

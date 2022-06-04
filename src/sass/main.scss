@@ -26,6 +26,16 @@ body {
 .gallery {
   display: flex;
   flex-wrap: wrap;
+  margin: -15px;
+}
+
+// .photo-link{
+// // margin: 15px;
+// }
+
+.photo-card{
+  margin: 15px;
+  border-color: black;
 }
 
 .load-more {
