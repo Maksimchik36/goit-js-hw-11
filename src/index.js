@@ -19,18 +19,18 @@ let searchQuery = '';
 async function onFormSubmit(event) {
     event.preventDefault();
     galleryRef.innerHTML = "";
+    loadMoreRef.classList.remove('load-more-visible');
     
     searchQuery = event.currentTarget.elements.searchQuery.value.trim();
 
     if (searchQuery === '') {            
-                    galleryRef.innerHTML = "";
-                    loadMoreRef.classList.remove('load-more-visible')
+                    galleryRef.innerHTML = "";                    
                     Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
                     return;
     }
 
     const result = await apiService.searchImages(searchQuery);
-    renderImages(result.data.hits);
+    await renderImages(result.data.hits);
 
     imageLightBox.refresh();        
 
@@ -49,9 +49,12 @@ function renderImages(hits){
 
 async function onBtnLoadMoreClick(){
         apiService.page += 1;
+        loadMoreRef.classList.remove('load-more-visible');
 
 const result = await apiService.searchImages(searchQuery);
     renderImages(result.data.hits);
+    imageLightBox.refresh(); 
+    loadMoreRef.classList.add('load-more-visible');
     
     if (result.data.totalHits <= apiService.itemsPerPage*apiService.page) {
         
