@@ -39,7 +39,11 @@ async function onFormSubmit(event) {
             loadMoreRef.classList.add('load-more-visible');
         } else {
             Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
-             }   
+             }  
+
+        if (result.data.totalHits < apiService.itemsPerPage*apiService.page) {        
+            loadMoreRef.classList.remove('load-more-visible');
+             }     
 }
 
 function renderImages(hits){
