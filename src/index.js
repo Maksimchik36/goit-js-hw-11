@@ -5,11 +5,10 @@ import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-
 const formRef = document.querySelector("#search-form");
 const galleryRef = document.querySelector('.gallery');
 const loadMoreRef = document.querySelector('.load-more')
-const imageLightBox = new SimpleLightbox('.gallery a', {captionDelay: 250 });
+const imageLightBox = new SimpleLightbox('.gallery a', {captionDelay: 250});
 
 formRef.addEventListener("submit", onFormSubmit);
 loadMoreRef.addEventListener("click", onBtnLoadMoreClick)
@@ -33,11 +32,12 @@ async function onFormSubmit(event) {
     const result = await apiService.searchImages(searchQuery);
     // await renderImages(result.data.hits);
 
-    imageLightBox.refresh();        
+           
 
         if (result.data.totalHits > 0) {
             Notiflix.Notify.success(`Hooray! We found ${result.data.totalHits} images.`);
             await renderImages(result.data.hits);
+            imageLightBox.refresh(); 
             loadMoreRef.classList.add('load-more-visible');
 
             if (result.data.totalHits < apiService.itemsPerPage*apiService.page) {        

@@ -1,13 +1,17 @@
-/*
- * Главный файл стилей.
- * Все паршалы подключаются сюда.
- */
+// /*
+//  * Главный файл стилей.
+//  * Все паршалы подключаются сюда.
+//  */
 
-// Стили для файла с примером HTML-фрагмента
-// @import './example';
+// // Стили для файла с примером HTML-фрагмента
+// // @import './example';
 
-// Путь к изображениям из SASS-файла всегда такой, как из папки css
+// // Путь к изображениям из SASS-файла всегда такой, как из папки css
 
+:root {
+  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-duration: 250ms;
+}
 body {
   size: 20px;
   background-color: aliceblue;
@@ -46,18 +50,38 @@ input{
 }
 
 .gallery {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -15px;
-  padding: 15px;
+    padding: 15px;
+
+  display: grid;
+  max-width: 1140px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  // grid-auto-rows: 240px;
+  grid-gap: 12px;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.photo-card{
-  margin: 15px; 
-  border: 2px solid rgb(0, 0, 0);
-  border-radius: 10px;
-  overflow: hidden;
+.photo__link:hover {
+  cursor: zoom-in;
+}
 
+.gallery__image {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  transition: transform var(--animation-duration) var(--timing-function);
+}
+
+.gallery__image:hover {
+  transform: scale(1.03);
+}
+
+.photo__card{
+  padding: 15px;
+  position: relative;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
 }
 
 .load-more {
@@ -73,8 +97,9 @@ input{
 
 .info {
   display: flex;
+ text-align: center;
 }
 
-.info-item{
-  margin: auto;
-}
+// .info-item{
+//   margin-bottom: auto;
+// }
